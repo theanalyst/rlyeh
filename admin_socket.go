@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net"
 	"os"
+	"path/filepath"
 )
 
 func QueryAdminSocket(path string) error {
@@ -39,8 +40,13 @@ func QueryAdminSocket(path string) error {
 }
 
 func main() {
-	err := QueryAdminSocket(os.Args[1])
+	osd_sockets := make([]string, 100)
+	osd_sockets, err := filepath.Glob(os.Args[1])
 	if err != nil {
-		fmt.Println("We errored out", err)
+		fmt.Println("No sockets fount exiting")
+	}
+	fmt.Println(osd_sockets)
+	for _, osd_socket := range osd_sockets {
+		QueryAdminSocket(osd_socket)
 	}
 }
