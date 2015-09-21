@@ -1,0 +1,6 @@
+build:
+	go build -v ./...
+fmt:
+	go fmt -v ./...
+all:
+	build
