@@ -7,7 +7,6 @@ import (
 )
 
 func main() {
-	osd_sockets := make([]string, 100)
 	osd_sockets, err := filepath.Glob(os.Args[1])
 	if err != nil {
 		log.Println("No sockets fount exiting")
