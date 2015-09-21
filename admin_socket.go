@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"net"
 	"os"
 	"path/filepath"
@@ -9,20 +10,21 @@ import (
 
 func QueryAdminSocket(path string) error {
 	fmt.Println("Dialing.....", path)
+	log.Println("Dialing.....", path)
 	conn, err := net.Dial("unix", path)
 	defer conn.Close()
 	if err != nil {
-		fmt.Println("Connecting to socket returned ", err)
+		log.Println("Connecting to socket returned ", err)
 	} else {
-		fmt.Println("Connection successful!")
+		log.Println("Connection successful!")
 	}
 
 	n, err := conn.Write([]byte("{\"prefix\":\"perf dump\"}\x00"))
 
 	if err != nil {
-		fmt.Println("Writing to socket returned ", err)
+		log.Println("Writing to socket returned ", err)
 	} else {
-		fmt.Println("Writing successful!", n)
+		log.Println("Writing successful!", n)
 	}
 
 	buff := make([]byte, 102400)
@@ -31,6 +33,7 @@ func QueryAdminSocket(path string) error {
 	n, err = conn.Read(buff)
 	if err != nil {
 		fmt.Println("Reading to socket returned ", err)
+		log.Println("Reading to socket returned ", err)
 	} else {
 		result = string(buff[:n])
 		fmt.Println("Reading successful!", result)
@@ -43,9 +46,9 @@ func main() {
 	osd_sockets := make([]string, 100)
 	osd_sockets, err := filepath.Glob(os.Args[1])
 	if err != nil {
-		fmt.Println("No sockets fount exiting")
+		log.Println("No sockets fount exiting")
 	}
-	fmt.Println(osd_sockets)
+	log.Println(osd_sockets)
 	for _, osd_socket := range osd_sockets {
 		QueryAdminSocket(osd_socket)
 	}
