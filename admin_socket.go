@@ -33,6 +33,7 @@ func QueryAdminSocket(path string) error {
 	defer conn.Close()
 	if err != nil {
 		log.Println("Connecting to socket returned ", err)
+		return err
 	} else {
 		log.Println("Connection successful!")
 	}
@@ -41,11 +42,10 @@ func QueryAdminSocket(path string) error {
 
 	if err != nil {
 		log.Println("Writing to socket returned ", err)
+		return err
 	} else {
 		log.Println("Writing successful!", n)
 	}
-
-	buff := make([]byte, 102400)
 	len_buff := make([]byte, 4)
 	_, err = conn.Read(len_buff)
 	if err != nil {
