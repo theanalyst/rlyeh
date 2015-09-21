@@ -12,7 +12,22 @@ func main() {
 		log.Println("No sockets fount exiting")
 	}
 	log.Println(osd_sockets)
+	c := make(chan struct {
+		PerfCounter
+		error
+	})
+	perfcounters := make([]PerfCounter, len(osd_sockets))
+
 	for _, osd_socket := range osd_sockets {
-		QueryAdminSocket(osd_socket)
+		go func() {
+			result, err := QueryAdminSocket(osd_socket)
+			c <- struct {
+				PerfCounter
+				error
+			}{*result, err}
+		}()
+		query := <-c
+		perfcounters = append(perfcounters, query.PerfCounter)
 	}
+
 }
