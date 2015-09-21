@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/binary"
 	"encoding/json"
 	"log"
 	"net"
@@ -45,13 +46,20 @@ func QueryAdminSocket(path string) error {
 	}
 
 	buff := make([]byte, 102400)
+	len_buff := make([]byte, 4)
+	_, err = conn.Read(len_buff)
+	if err != nil {
+		log.Println("Reading length from socket failed", err)
+		return err
+	}
+	buff := make([]byte, binary.BigEndian.Uint32(len_buff))
 	//	var perf perf_counter
 	var perf interface{}
-	n, err = conn.Read(buff)
+	_, err = conn.Read(buff)
 	if err != nil {
 		log.Println("Reading to socket returned ", err)
 	} else {
-		err = json.Unmarshal(buff[4:n], &perf)
+		err = json.Unmarshal(buff, &perf)
 		if err != nil {
 			log.Println("Unmarshalling json errored with ", err)
 		}
