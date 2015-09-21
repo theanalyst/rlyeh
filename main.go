@@ -27,7 +27,10 @@ func main() {
 			}{*result, err}
 		}()
 		query := <-c
-		perfcounters = append(perfcounters, query.PerfCounter)
+		if query.error == nil {
+			perfcounters = append(perfcounters, query.PerfCounter)
+		}
+
 	}
 
 }
