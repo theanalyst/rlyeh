@@ -23,14 +23,16 @@ func QueryAdminSocket(path string) error {
 	} else {
 		fmt.Println("Writing successful!", n)
 	}
-	len := make([]byte, 4)
 
 	buff := make([]byte, 102400)
+	var result string
+
 	n, err = conn.Read(buff)
 	if err != nil {
 		fmt.Println("Reading to socket returned ", err)
 	} else {
-		fmt.Println("Reading successful!", string(buff[0:n]))
+		result = string(buff[:n])
+		fmt.Println("Reading successful!", result)
 	}
 
 	return err
