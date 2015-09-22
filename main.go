@@ -10,7 +10,7 @@ func main() {
 	LogInit(ioutil.Discard, os.Stdout, os.Stdout, os.Stderr)
 	osd_sockets, err := filepath.Glob(os.Args[1])
 	if err != nil {
-		Error.Println("No sockets fount exiting")
+		Error.Println("No sockets found exiting")
 	}
 	Debug.Println("Found following sockets", osd_sockets)
 	c := make(chan struct {
