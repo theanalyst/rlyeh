@@ -14,4 +14,10 @@ type PerfCounter struct {
 			Sum      float64 `json:"sum"`
 		} `json:"leveldb_get_latency"`
 	} `json:"leveldb"`
+	OSD struct {
+		OpLatency struct {
+			AvgCount int     `json:"avgcount"`
+			Sum      float64 `json:"sum"`
+		} `json:"op_latency"`
+	} `json:"osd"`
 }
