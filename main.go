@@ -1,13 +1,13 @@
 package main
 
 import (
-	"io/ioutil"
+	"log"
 	"os"
 	"path/filepath"
 )
 
 func main() {
-	LogInit(ioutil.Discard, os.Stdout, os.Stdout, os.Stderr)
+	LogInit(os.Stderr, os.Stdout, os.Stdout, os.Stderr)
 	osd_sockets, err := filepath.Glob(os.Args[1])
 	if err != nil {
 		Error.Println("No sockets found exiting")
@@ -22,6 +22,9 @@ func main() {
 	for _, osd_socket := range osd_sockets {
 		go func() {
 			result, err := QueryAdminSocket(osd_socket)
+			if err != nil {
+				log.Fatal("Querying Socket failed with ", err)
+			}
 			c <- struct {
 				PerfCounter
 				error
