@@ -40,6 +40,4 @@ func QueryAdminSocket(path string) (*PerfCounter, error) {
 		Debug.Println(perf)
 		return perf, nil
 	}
-
-	return nil, err
 }
