@@ -36,5 +36,5 @@ func main() {
 		}
 
 	}
-
+	GetClusterStatus(os.Args[2])
 }
