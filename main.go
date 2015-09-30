@@ -37,4 +37,5 @@ func main() {
 
 	}
 	GetClusterStatus(os.Args[2])
+	GetClusterIOPs(os.Args[2])
 }

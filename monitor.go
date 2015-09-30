@@ -30,3 +30,16 @@ func GetClusterStatus(conf string) {
 		Debug.Println(message)
 	}
 }
+
+func GetClusterIOPs(conf string) {
+	conn, err := GetRadosHandle(conf)
+	if err == nil {
+		cmd, err := json.Marshal(map[string]string{"prefix": "osd pool stats", "format": "json"})
+		buf, _, err := conn.MonCommand(cmd)
+		if err == nil {
+			var message []map[string]interface{}
+			json.Unmarshal(buf, &message)
+			Debug.Println(message)
+		}
+	}
+}
