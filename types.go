@@ -21,3 +21,23 @@ type PerfCounter struct {
 		} `json:"op_latency"`
 	} `json:"osd"`
 }
+
+type MonStats struct {
+	Cluster struct {
+		NumObject          int `json:"num_object"`
+		NumObjectDegraded  int `json:"num_object_degraded"`
+		NumObjectMisplaced int `json:"num_object_misplaced"`
+		NumObjectUnfound   int `json:"num_object_unfound"`
+		NumOsd             int `json:"num_osd"`
+		NumOsdIn           int `json:"num_osd_in"`
+		NumOsdUp           int `json:"num_osd_up"`
+		NumPg              int `json:"num_pg"`
+		NumPgActive        int `json:"num_pg_active"`
+		NumPgActiveClean   int `json:"num_pg_active_clean"`
+		NumPgPeering       int `json:"num_pg_peering"`
+		NumPool            int `json:"num_pool"`
+		OsdBytes           int `json:"osd_bytes"`
+		OsdBytesAvail      int `json:"osd_bytes_avail"`
+		OsdBytesUsed       int `json:"osd_bytes_used"`
+	} `json:"cluster"`
+}
