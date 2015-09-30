@@ -1,14 +1,25 @@
 package main
 
 import (
+	"github.com/alecthomas/kingpin"
 	"log"
 	"os"
 	"path/filepath"
 )
 
+var (
+	osd_sockets = kingpin.Flag("osd_sock", "pattern for osd sockets").String()
+	mon_sockets = kingpin.Flag("mon_sock", "pattern for mon sockets").String()
+	conf        = kingpin.Flag("conf", "path to configuration file").Default("/etc/ceph/ceph.conf").String()
+)
+
 func main() {
+
+	kingpin.Version("0.1")
+	kingpin.Parse()
+
 	LogInit(os.Stderr, os.Stdout, os.Stdout, os.Stderr)
-	osd_sockets, err := filepath.Glob(os.Args[1])
+	osd_sockets, err := filepath.Glob(*osd_sockets)
 	if err != nil {
 		Error.Println("No sockets found exiting")
 	}
@@ -36,6 +47,6 @@ func main() {
 		}
 
 	}
-	GetClusterStatus(os.Args[2])
-	GetClusterIOPs(os.Args[2])
+	GetClusterStatus(*conf)
+	GetClusterIOPs(*conf)
 }
