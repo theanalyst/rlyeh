@@ -13,6 +13,11 @@ var (
 	conf        = kingpin.Flag("conf", "path to configuration file").Default("/etc/ceph/ceph.conf").String()
 )
 
+type perf struct {
+	PerfCounter
+	error
+}
+
 func main() {
 
 	kingpin.Version("0.1")
@@ -24,10 +29,7 @@ func main() {
 		Error.Println("No sockets found exiting")
 	}
 	Debug.Println("Found following sockets", osd_sockets)
-	c := make(chan struct {
-		PerfCounter
-		error
-	})
+	c := make(chan perf)
 	perfcounters := make([]PerfCounter, len(osd_sockets))
 
 	for _, osd_socket := range osd_sockets {
@@ -36,10 +38,7 @@ func main() {
 			if err != nil {
 				log.Fatal("Querying Socket failed with ", err)
 			}
-			c <- struct {
-				PerfCounter
-				error
-			}{*result, err}
+			c <- perf{*result, err}
 		}()
 		query := <-c
 		if query.error == nil {
