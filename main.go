@@ -8,8 +8,8 @@ import (
 )
 
 var (
-	osd_sockets = kingpin.Flag("osd_sock", "pattern for osd sockets").String()
-	mon_sockets = kingpin.Flag("mon_sock", "pattern for mon sockets").String()
+	osd_sockets = kingpin.Flag("osd_sock", "pattern for osd sockets").Default("/var/run/ceph/osd*asok").String()
+	mon_sockets = kingpin.Flag("mon_sock", "pattern for mon sockets").Default("/var/run/ceph/mon*asok").String()
 	conf        = kingpin.Flag("conf", "path to configuration file").Default("/etc/ceph/ceph.conf").String()
 )
 
