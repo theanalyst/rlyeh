@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/binary"
 	"encoding/json"
+	log "github.com/Sirupsen/logrus"
 	"net"
 )
 
@@ -13,7 +14,7 @@ func QueryAdminSocket(path string) (*PerfCounter, error) {
 	}
 	defer conn.Close()
 
-	Debug.Println("Connected to socket ", path)
+	log.Debug("Connected to socket ", path)
 
 	_, err = conn.Write([]byte("{\"prefix\":\"perf dump\"}\x00"))
 
@@ -35,9 +36,9 @@ func QueryAdminSocket(path string) (*PerfCounter, error) {
 		perf := &PerfCounter{}
 		err = json.Unmarshal(buff, &perf)
 		if err != nil {
-			Error.Println("Unmarshalling json errored with ", err)
+			log.Error("Unmarshalling json errored with ", err)
 		}
-		Debug.Println(perf)
+		log.Debug(perf)
 		return perf, nil
 	}
 }

@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	log "github.com/Sirupsen/logrus"
 	"github.com/ceph/go-ceph/rados"
 )
 
@@ -27,7 +28,7 @@ func GetClusterStatus(conf string) {
 		var message map[string]interface{}
 
 		err = json.Unmarshal(buf, &message)
-		Debug.Println(message)
+		//log.Debug(message)
 	}
 }
 
@@ -39,7 +40,7 @@ func GetClusterIOPs(conf string) {
 		if err == nil {
 			var message []map[string]interface{}
 			json.Unmarshal(buf, &message)
-			Debug.Println(message)
+			log.Debug(message)
 		}
 	}
 }
