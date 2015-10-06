@@ -1,19 +1,19 @@
 package main
 
 import (
-	"github.com/rackspace/gophercloud"
 	"github.com/rackspace/gophercloud/openstack"
 	"github.com/rackspace/gophercloud/openstack/identity/v2/tokens"
 )
 
-func get_token(endpoint string, username string, pass string, tenantid string) (*tokens.Token, error) {
+func get_token() (*tokens.Token, error) {
 
-	authOpts := gophercloud.AuthOptions{
-		IdentityEndpoint: endpoint,
-		Username:         username,
-		Password:         pass,
-		TenantID:         tenantid,
-	}
+	authOpts, err := openstack.AuthOptionsFromEnv()
+	// authOpts := gophercloud.AuthOptions{
+	// 	IdentityEndpoint: endpoint,
+	// 	Username:         username,
+	// 	Password:         pass,
+	// 	TenantID:         tenantid,
+	// }
 
 	provider, err := openstack.AuthenticatedClient(authOpts)
 
