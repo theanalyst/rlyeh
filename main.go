@@ -36,7 +36,7 @@ func main() {
 	if err != nil {
 		log.Error("No sockets found exiting")
 	}
-	log.Debug("Found following sockets", osd_sockets)
+	log.Info("Found following sockets", osd_sockets)
 	c := make(chan perf)
 	perfcounters := make([]PerfCounter, len(osd_sockets))
 
