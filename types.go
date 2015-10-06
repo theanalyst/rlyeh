@@ -42,3 +42,11 @@ type MonStats struct {
 		OsdBytesUsed       int `json:"osd_bytes_used"`
 	} `json:"cluster"`
 }
+
+type Meter struct {
+	counter_type   string
+	counter_name   string
+	resource_id    int
+	counter_unit   string
+	counter_volume float64
+}
