@@ -44,9 +44,9 @@ type MonStats struct {
 }
 
 type Meter struct {
-	counter_type   string
-	counter_name   string
-	resource_id    int
-	counter_unit   string
-	counter_volume float64
+	Counter_type   string  `json:"counter_type"`
+	Counter_name   string  `json:"counter_name"`
+	Resource_id    string  `json:"resource_id"`
+	Counter_unit   string  `json:"counter_unit"`
+	Counter_volume float64 `json:"counter_volume"`
 }
