@@ -3,6 +3,7 @@ package main
 import (
 	log "github.com/Sirupsen/logrus"
 	"github.com/alecthomas/kingpin"
+	"os"
 	"path/filepath"
 )
 
@@ -24,7 +25,13 @@ func main() {
 	kingpin.Version("0.1")
 	kingpin.Parse()
 
-	LogInit(*verbose, *logfile)
+	f, err := os.OpenFile(*logfile, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
+	if err != nil {
+		panic(err)
+	}
+	defer f.Close()
+
+	LogInit(*verbose, f)
 	osd_sockets, err := filepath.Glob(*osd_sockets)
 	if err != nil {
 		log.Error("No sockets found exiting")
