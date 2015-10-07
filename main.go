@@ -1,6 +1,8 @@
 package main
 
 import (
+	//	"encoding/json"
+	//	"fmt"
 	log "github.com/Sirupsen/logrus"
 	"github.com/alecthomas/kingpin"
 	"os"
@@ -51,9 +53,20 @@ func main() {
 		query := <-c
 		if query.error == nil {
 			perfcounters = append(perfcounters, query.PerfCounter)
+			// perf_json, err := json.Marshal(query.PerfCounter)
+			// if err == nil {
+			// 	fmt.Println(string(perf_json))
+			// }
+			token, err := get_token()
+			log.Debug(token)
+			if err == nil {
+				PostPerfCeilometer(token, query.PerfCounter)
+			}
+
 		}
 
 	}
 	GetClusterStatus(*conf)
 	GetClusterIOPs(*conf)
+
 }
