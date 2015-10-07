@@ -33,11 +33,15 @@ func QueryAdminSocket(path string) (*PerfCounter, error) {
 	if err != nil {
 		return nil, err
 	} else {
+		osd_id := GetOSDId(path)
+		log.Info("Getting perf counter for osd", osd_id)
 		perf := &PerfCounter{}
 		err = json.Unmarshal(buff, &perf)
 		if err != nil {
 			log.Error("Unmarshalling json errored with ", err)
 		}
+
+		perf.osd_id = osd_id
 		log.Debug(perf)
 		return perf, nil
 	}

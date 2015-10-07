@@ -1,6 +1,7 @@
 package main
 
 type PerfCounter struct {
+	osd_id    string
 	Filestore struct {
 		JournalLatency struct {
 			AvgCount int     `json:"avgcount"`
