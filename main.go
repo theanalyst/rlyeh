@@ -58,7 +58,6 @@ func main() {
 			// 	fmt.Println(string(perf_json))
 			// }
 			token, err := get_token()
-			log.Debug(token)
 			if err == nil {
 				PostPerfCeilometer(token, query.PerfCounter)
 			}
